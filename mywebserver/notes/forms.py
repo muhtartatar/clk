@@ -29,23 +29,4 @@ class WeekNoteForm(forms.ModelForm):
         return cleaned_data
 
 
-# views.py
-from django.shortcuts import render, redirect
-from .forms import WeekNoteForm
 
-
-def week_notes(request):
-    week_notes = WeekNote.objects.all()
-    context = {'week_notes': week_notes}
-    return render(request, 'notes/week_notes.html', context)
-
-
-def create_week_note(request):
-    if request.method == 'POST':
-        form = WeekNoteForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('week_notes')
-    else:
-        form = WeekNoteForm()
-    return render(request, 'notes/create_week_note.html', {'form': form})
