@@ -1,0 +1,8 @@
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if form.errors %}
+        <p class="error-message">{{ form.errors.email }}</p>
+    {% endif %}
+    <button type="submit">Зберегти</button>
+</form>

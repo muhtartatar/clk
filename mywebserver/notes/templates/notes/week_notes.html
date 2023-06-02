@@ -1,0 +1,10 @@
+<h1>Week Notes</h1>
+<ul>
+  {% for week_note in week_notes %}
+    <li>{{ week_note.day_of_week }}: {{ week_note.note_title }}</li>
+    <li>{{ week_note.note_description }}</li>
+  {% empty %}
+    <li>No notes available</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'create_week_note' %}">Create a new week note</a>
