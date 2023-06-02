@@ -20,6 +20,7 @@ from notes.views import week_notes, create_week_note
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', week_notes, name='home'),
     path('week_notes/', week_notes, name='week_notes'),
     path('create_week_note/', create_week_note, name='create_week_note'),
 ]

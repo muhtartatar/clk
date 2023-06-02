@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
+from .forms import WeekNoteForm
 from .models import WeekNote
+from validate_email_address import validate_email
 
 
 def week_notes(request):
@@ -10,9 +12,13 @@ def week_notes(request):
 
 def create_week_note(request):
     if request.method == 'POST':
-        day_of_week = request.POST['day_of_week']
-        note_title = request.POST['note_title']
-        note_description = request.POST['note_description']
-        WeekNote.objects.create(day_of_week=day_of_week, note_title=note_title, note_description=note_description)
-        return redirect('week_notes')
-    return render(request, 'notes/create_week_note.html')
+        form = WeekNoteForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            if validate_email(email):
+                return redirect('week_notes')
+            else:
+                form.add_error('email', 'Недійсна електронна пошта')
+    else:
+        form = WeekNoteForm()
+    return render(request, 'notes/create_week_note.html', {'form': form})
